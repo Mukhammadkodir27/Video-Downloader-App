@@ -16,8 +16,10 @@ Before you run this application, make sure you have Python installed on your sys
 
 First, clone this repository to your local machine using:
 
-```bash
+## bash
 git clone https://github.com/mukhammadkodir27/Video-Downloader-App.git
 
-![image](https://github.com/Mukhammadkodir27/Video-Downloader-App/assets/99057791/fe3234a1-a4cb-4b23-ab4d-09ca2929de00)
+![image](https://github.com/Mukhammadkodir27/Video-Downloader-App/assets/99057791/b809195c-91d6-4f75-a9ce-8b79dbbd7bcb)
+![image](https://github.com/Mukhammadkodir27/Video-Downloader-App/assets/99057791/945f7d0b-e10a-408b-8a6f-ccfef6dbff6f)
+
 
