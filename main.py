@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import filedialog
+from PIL import Image, ImageTk
 from pytube import YouTube
 from moviepy.editor import *
 import shutil
@@ -8,42 +9,76 @@ import shutil
 def download():
     video_path = url_entry.get()
     file_path = path_label.cget("text")
-    print("Downloading...")
-    mp4 = YouTube(video_path).streams.get_highest_resolution().download()
-    video_clip = VideoFileClip(mp4)
-    video_clip.close()
-    shutil.move(mp4, file_path)
-    print("Download Complete")
+
+    if not video_path:
+        status_label.config(text="Please, provide the video URL.", fg='red')
+        return
+    if file_path == "Select path to download":
+        status_label.config(text="Please select the download path.", fg='red')
+        return
+
+    status_label.config(text="Downloading...", fg='black')
+    root.update_idletasks()
+    try:
+        mp4 = YouTube(video_path).streams.get_highest_resolution().download()
+        video_clip = VideoFileClip(mp4)
+        video_clip.close()
+        shutil.move(mp4, file_path)
+        status_label.config(text="Successfully downloaded!", fg='green')
+    except Exception as e:
+        status_label.config(text="Error: " + str(e), fg='red')
 
 
 def get_path():
     path = filedialog.askdirectory()
-    path_label.config(text=path)
+    if path:
+        path_label.config(text=path)
 
 
 root = Tk()
 root.title("Video Downloader")
-canvas = Canvas(root, width=400, height=300)
-canvas.pack()
+root.geometry("600x500")
+root.resizable(False, False)
 
-# app label
-app_label = Label(root, text="Video Downloader", fg="blue", font=("Arial, 20"))
-canvas.create_window(200, 20, window=app_label)
+# Load and set the background image using Pillow
+image = Image.open('background4.png')
+bg_image = ImageTk.PhotoImage(image)
+background_label = Label(root, image=bg_image)
+background_label.place(x=0, y=0, relwidth=1, relheight=1)
 
-# entry to accept video URL
-url_label = Label(root, text="Enter video URL")
-url_entry = Entry(root)
-canvas.create_window(200, 80, window=url_label)
-canvas.create_window(200, 100, window=url_entry)
+# App label
+app_label = Label(root, text="Video Downloader", fg="white",
+                  bg="#BE0000", font=("Arial", 18))
+app_label.place(x=300, y=70, anchor="center")
 
-# path to download videos
-path_label = Label(root, text="Select path to download")
-path_button = Button(root, text="Select", command=get_path)
-canvas.create_window(200, 150, window=path_label)
-canvas.create_window(200, 170, window=path_button)
+# Entry to accept video URL
+url_label = Label(root, text="Enter video URL",
+                  font=("Arial", 10), fg="white", bg="#BE0000")
+url_entry = Entry(root, font=("Arial", 10), width=40)
+url_label.place(x=300, y=140, anchor="center")
+url_entry.place(x=300, y=170, anchor="center")
 
-# download button
-download_button = Button(root, text="Download", command=download)
-canvas.create_window(200, 250, window=download_button)
+# Path to download videos
+path_label = Label(root, text="Select path to download",
+                   font=("Arial", 10), fg="white", bg="#BE0000")
+path_button = Button(root, text="Select", command=get_path,
+                     font=("Arial", 10), fg="blue")
+path_label.place(x=300, y=210, anchor="center")
+path_button.place(x=300, y=250, anchor="center")
+
+# Download button
+download_button = Button(root, text="Download",
+                         command=download, font=("Arial", 12), fg="blue")
+download_button.place(x=300, y=300, anchor="center")
+
+# Status label
+status_label = Label(root, text="", font=(
+    "Arial", 10), fg="red", bg="white")
+status_label.place(x=300, y=340, anchor="center")
+
+# Footer label
+footer_label = Label(root, text="Created by Mukhammadkodir",
+                     font=("Arial", 8), fg="black", bg="#dedede")
+footer_label.pack(side=BOTTOM, fill=X)
 
 root.mainloop()
