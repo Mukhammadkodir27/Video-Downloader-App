@@ -19,4 +19,5 @@ First, clone this repository to your local machine using:
 ```bash
 git clone https://github.com/mukhammadkodir27/Video-Downloader-App.git
 
-![image](https://github.com/Mukhammadkodir27/Video-Downloader-App/assets/99057791/af709fe2-0c1d-4118-af6c-7c5440b46983)
+![image](https://github.com/Mukhammadkodir27/Video-Downloader-App/assets/99057791/fe3234a1-a4cb-4b23-ab4d-09ca2929de00)
+
